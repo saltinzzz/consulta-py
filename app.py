@@ -4,13 +4,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'clave-demo'
 
 pacientes = [
-    {"id": 1, "nombre": "Pedro Gomez", "dni": "12345678", "telefono": "987654321"},
-    {"id": 2, "nombre": "Adriana Tenorio", "dni": "87654321", "telefono": "912345678"},
+    {"id": 1, "nombre": "Pedro Gomez", "dni": "12345678", "telefono": "987654321","direccion": "Av. Perukistan","fecha_nacimiento": "2000-10-31"},
+    {"id": 2, "nombre": "Adriana Tenorio", "dni": "87654321", "telefono": "912345678","direccion": "Calle Besique 444","fecha_nacimiento": "1980-06-31"},
 ]
 
 consultas = [
-    {"id": 1, "paciente": "Pedro Gomez", "motivo": "Dolor de cabeza", "fecha": "2025-10-20"},
-    {"id": 2, "paciente": "Adriana Tenorio", "motivo": "Chequeo general", "fecha": "2025-10-21"},
+    {"id": 1, "paciente": "Pedro Gomez", "motivo": "Dolor de cabeza", "fecha": "2025-10-01","descripcion": "El paciente presenta dolor de cabeza persistente desde hace 3 días. Se recomienda descanso y análisis clínico básico."},
+    {"id": 2, "paciente": "Adriana Tenorio", "motivo": "Chequeo general", "fecha": "2025-10-31","descripcion": "Chequeo general anual. No presenta síntomas significativos, se realizaron exámenes de control preventivo."},
 ]
 
 @app.route('/')

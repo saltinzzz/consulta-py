@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block content %}
 <h4>{{ accion }} Consulta</h4>
 <form>
   <div class="mb-2">
     <label>Paciente</label>
     <select class="form-select">
-      <option>Juan Pérez</option>
-      <option>María López</option>
+      <option>Pedro Gomez</option>
+      <option>Adriana Tenorio</option>
     </select>
   </div>
   <div class="mb-2">
@@ -14,10 +14,10 @@
     <input class="form-control" placeholder="Ej: Dolor abdominal">
   </div>
   <div class="mb-2">
-    <label>Resumen</label>
+    <label>Descripción</label>
     <textarea class="form-control" rows="4"></textarea>
   </div>
-  <button class="btn btn-primary">Guardar (No funcional)</button>
+  <button class="btn btn-primary">Guardar*</button>
   <a class="btn btn-secondary" href="{{ url_for('listar_consultas') }}">Volver</a>
 </form>
 {% endblock %}

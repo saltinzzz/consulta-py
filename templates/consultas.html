@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Consultas</h3>
+  <a href="{{ url_for('nueva_consulta') }}" class="btn btn-primary">Nueva Consulta</a>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Paciente</th>
+      <th>Motivo</th>
+      <th>Fecha</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in consultas %}
+    <tr>
+      <td>{{ c.paciente }}</td>
+      <td>{{ c.motivo }}</td>
+      <td>{{ c.fecha }}</td>
+      <td>
+        <button
+          class="btn btn-sm btn-info"
+          data-bs-toggle="modal"
+          data-bs-target="#modalConsulta"
+          data-paciente="{{ c.paciente }}"
+          data-motivo="{{ c.motivo }}"
+          data-fecha="{{ c.fecha }}"
+          data-descripcion="{{ c.descripcion }}">
+          Ver
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="modal fade" id="modalConsulta" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Detalles de la Consulta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Paciente:</strong> <span id="modalPaciente"></span></p>
+        <p><strong>Motivo:</strong> <span id="modalMotivo"></span></p>
+        <p><strong>Fecha:</strong> <span id="modalFecha"></span></p>
+        <hr>
+        <p><strong>Descripción:</strong></p>
+        <p id="modalDescripcion" style="white-space: pre-line;"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('modalConsulta')
+  modal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget
+    document.getElementById('modalPaciente').textContent = button.getAttribute('data-paciente')
+    document.getElementById('modalMotivo').textContent = button.getAttribute('data-motivo')
+    document.getElementById('modalFecha').textContent = button.getAttribute('data-fecha')
+    document.getElementById('modalDescripcion').textContent = button.getAttribute('data-descripcion')
+  })
+</script>
+{% endblock %}

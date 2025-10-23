@@ -1,0 +1,17 @@
+.imagen-lateral {
+  max-width: 80%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.sombra-form {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.logo-hospital {
+  height: 40px;
+  width: auto;    
+  border-radius: 8px; 
+}
+
