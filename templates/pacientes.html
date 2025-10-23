@@ -4,8 +4,18 @@
   <h3>Pacientes</h3>
   <a class="btn btn-success" href="{{ url_for('nuevo_paciente') }}">Nuevo Paciente</a>
 </div>
-<table class="table table-striped">
-  <thead><tr><th>Nombre</th><th>DNI</th><th>Teléfono</th><th>Dirección</th><th>Fecha de Nacimiento</th><th>Acciones</th></tr></thead>
+
+<table class="table table-striped d-none d-md-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>DNI</th>
+      <th>Teléfono</th>
+      <th>Dirección</th>
+      <th>Fecha de Nacimiento</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
   <tbody>
     {% for p in pacientes %}
     <tr>
@@ -22,4 +32,24 @@
     {% endfor %}
   </tbody>
 </table>
+
+<div class="row row-cols-1 g-3 d-md-none">
+  {% for p in pacientes %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.nombre }}</h5>
+        <p class="card-text"><strong>DNI:</strong> {{ p.dni }}</p>
+        <p class="card-text"><strong>Teléfono:</strong> {{ p.telefono }}</p>
+        <p class="card-text"><strong>Dirección:</strong> {{ p.direccion }}</p>
+        <p class="card-text"><strong>Fecha de Nacimiento:</strong> {{ p.fecha_nacimiento }}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button class="btn btn-primary btn-sm" disabled>Editar</button>
+        <button class="btn btn-danger btn-sm" disabled>Eliminar</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
