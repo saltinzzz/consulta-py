@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>{{ accion }} Paciente</h4>
+<form>
+  <div class="mb-2">
+    <label>Nombre</label>
+    <input class="form-control" placeholder="Ej: Juan Pérez">
+  </div>
+  <div class="mb-2">
+    <label>DNI</label>
+    <input class="form-control" placeholder="Ej: 12345678">
+  </div>
+  <div class="mb-2">
+    <label>Teléfono</label>
+    <input class="form-control" placeholder="Ej: 987654321">
+  </div>
+  <div class="mb-2">
+    <label>Dirección</label>
+    <input class="form-control" placeholder="Ej: Calle Los Robles 123">
+  </div>
+  <div class="mb-2">
+    <label>Fecha de Nacimiento</label>
+    <input class="form-control" placeholder="YYYY-MM-DD">
+  </div>
+  <button class="btn btn-primary">Guardar (No funcional aún)</button>
+  <a class="btn btn-secondary" href="{{ url_for('listar_pacientes') }}">Volver</a>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Pacientes</h3>
+  <a class="btn btn-success" href="{{ url_for('nuevo_paciente') }}">Nuevo Paciente</a>
+</div>
+<table class="table table-striped">
+  <thead><tr><th>Nombre</th><th>DNI</th><th>Teléfono</th><th>Acciones</th></tr></thead>
+  <tbody>
+    {% for p in pacientes %}
+    <tr>
+      <td>{{ p.nombre }}</td>
+      <td>{{ p.dni }}</td>
+      <td>{{ p.telefono }}</td>
+      <td>
+        <button class="btn btn-sm btn-primary" disabled>Editar</button>
+        <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
