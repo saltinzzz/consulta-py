@@ -1,7 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, flash
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'clave-demo'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'clave-demo')
 
 pacientes = [
     {"id": 1, "nombre": "Pedro Gomez", "dni": "12345678", "telefono": "987654321","direccion": "Av. Perukistan","fecha_nacimiento": "2000-10-31"},
