@@ -34,5 +34,17 @@ def listar_consultas():
 def nueva_consulta():
     return render_template('consulta_form.html', accion='Nueva')
 
+@app.route('/maternidad')
+def maternidad():
+    return render_template('maternidad.html')
+
+@app.route('/chequeo')
+def chequeo():
+    return render_template('chequeo.html')
+
+@app.route('/emergencia')
+def emergencia():
+    return render_template('emergencia.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
