@@ -1,50 +1,208 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 import os
+from extensions import db
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'clave-demo')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clinica.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-pacientes = [
-    {"id": 1, "nombre": "Pedro Gomez", "dni": "12345678", "telefono": "987654321","direccion": "Av. Perukistan","fecha_nacimiento": "2000-10-31"},
-    {"id": 2, "nombre": "Adriana Tenorio", "dni": "87654321", "telefono": "912345678","direccion": "Calle Besique 444","fecha_nacimiento": "1980-06-31"},
-]
+db.init_app(app)
 
-consultas = [
-    {"id": 1, "paciente": "Pedro Gomez", "motivo": "Dolor de cabeza", "fecha": "2025-10-01","descripcion": "El paciente presenta dolor de cabeza persistente desde hace 3 días. Se recomienda descanso y análisis clínico básico."},
-    {"id": 2, "paciente": "Adriana Tenorio", "motivo": "Chequeo general", "fecha": "2025-10-31","descripcion": "Chequeo general anual. No presenta síntomas significativos, se realizaron exámenes de control preventivo."},
-]
+with app.app_context():
+    from models import Paciente, Maternidad, Chequeo, Emergencia, Doctor
 
 @app.route('/')
-def index():
-    return redirect(url_for('listar_pacientes'))
+def inicio():
+    return render_template('index.html')
 
 @app.route('/pacientes')
 def listar_pacientes():
+    pacientes = Paciente.query.all()
     return render_template('pacientes.html', pacientes=pacientes)
 
-@app.route('/pacientes/nuevo')
+@app.route('/pacientes/nuevo', methods=['GET', 'POST'])
 def nuevo_paciente():
-    return render_template('paciente_form.html', accion='Nuevo')
+    if request.method == 'POST':
+        nuevo = Paciente(
+            nombre=request.form['nombre'],
+            dni=request.form['dni'],
+            telefono=request.form['telefono'],
+            direccion=request.form['direccion'],
+            fecha_nacimiento=request.form['fecha_nacimiento'],
+            genero=request.form['genero'],
+            tipo_sangre=request.form['tipo_sangre'],
+            seguro=request.form['seguro'],
 
-@app.route('/consultas')
-def listar_consultas():
-    return render_template('consultas.html', consultas=consultas)
+        )
 
-@app.route('/consultas/nuevo')
-def nueva_consulta():
-    return render_template('consulta_form.html', accion='Nueva')
+        db.session.add(nuevo)
+        db.session.commit()
+
+        return redirect('/pacientes')
+
+    return render_template('paciente_form.html', accion="Nuevo")
 
 @app.route('/maternidad')
-def maternidad():
-    return render_template('maternidad.html')
+def listar_maternidad():
+    registros = Maternidad.query.all()
+    return render_template('maternidad.html', maternidad=registros)
+
+@app.route('/maternidad/nuevo', methods=['GET', 'POST'])
+def nueva_maternidad():
+    if request.method == 'POST':
+        nueva = Maternidad(
+            nombre=request.form['nombre'],
+            dni=request.form['dni'],
+            fecha_control=request.form['fecha_control'],
+            edad_gestacional=request.form['edad_gestacional'],
+            presion=request.form['presion'],
+            peso=request.form['peso'],
+            mareos_nauseas=request.form['mareos_nauseas'],
+            alergia=request.form['alergia'],
+            detalle_alergia=request.form['detalle_alergia'],
+            observaciones=request.form['observaciones'],
+            proxima_fecha=request.form['proxima_fecha'],
+            tema=request.form['tema']
+        )
+
+        db.session.add(nueva)
+        db.session.commit()
+
+        return redirect('/maternidad')
+
+    return render_template('maternidad_form.html', accion="Nuevo")
 
 @app.route('/chequeo')
-def chequeo():
-    return render_template('chequeo.html')
+def listar_chequeo():
+    registros = Chequeo.query.all()
+    return render_template('chequeo.html', chequeo=registros)
+
+@app.route('/chequeo/nuevo', methods=['GET', 'POST'])
+def nuevo_chequeo():
+    if request.method == 'POST':
+        nuevo = Chequeo(
+            nombre=request.form['nombre'],
+            dni=request.form['dni'],
+            fecha=request.form['fecha'],
+            temperatura=request.form['temperatura'],
+            presion=request.form['presion'],
+            peso=request.form['peso'],
+            altura=request.form['altura'],
+            medicacion=request.form['medicacion'],
+            detalle_medicacion=request.form.get('detalle_medicacion', ''),
+            alergia=request.form['alergia'],
+            detalle_alergia=request.form.get('detalle_alergia', ''),
+            observaciones=request.form['observaciones']
+        )
+
+        db.session.add(nuevo)
+        db.session.commit()
+
+        return redirect('/chequeo')
+
+    return render_template('chequeo_form.html', accion="Nuevo")
 
 @app.route('/emergencia')
-def emergencia():
-    return render_template('emergencia.html')
+def listar_emergencia():
+    registros = Emergencia.query.all()
+    return render_template('emergencia.html', emergencia=registros)
+
+@app.route('/emergencia/nuevo', methods=['GET', 'POST'])
+def nueva_emergencia():
+    if request.method == 'POST':
+        nueva = Emergencia(
+            nombre=request.form['nombre'],
+            dni=request.form['dni'],
+            fecha_hora=request.form['fecha_hora'],
+            tipo=request.form['tipo'],
+            sangrado=request.form['sangrado'],
+            alergia=request.form['alergia'],
+            detalle_alergia=request.form['detalle_alergia'],
+            descripcion_incidente=request.form['descripcion_incidente'],
+            atencion=request.form['atencion'],
+            referido=request.form['referido']
+        )
+
+        db.session.add(nueva)
+        db.session.commit()
+
+        return redirect('/emergencia')
+
+    return render_template('emergencia_form.html', accion="Nuevo")
+
+@app.route('/doctores')
+def listar_doctores():
+    registros = Doctor.query.all()
+    return render_template('doctores.html', doctores=registros)
+
+@app.route('/doctores/nuevo', methods=['GET', 'POST'])
+def nuevo_doctor():
+    if request.method == 'POST':
+        nuevo = Doctor(
+            nombre=request.form['nombre'],
+            especialidad=request.form['especialidad'],
+            turno=request.form['turno'],
+            contacto=request.form['contacto'],
+            correo=request.form['correo'],
+            fecha_ingreso=request.form['fecha_ingreso'],
+        )
+
+        db.session.add(nuevo)
+        db.session.commit()
+
+        return redirect('/doctores')
+
+    return render_template('doctores_form.html', accion="Nuevo")
+
+@app.route('/dashboard')
+def dashboard():
+
+    # Conteo de tipos de emergencia
+    tipos_emergencia = {}
+    for e in Emergencia.query.all():
+        tipos_emergencia[e.tipo] = tipos_emergencia.get(e.tipo, 0) + 1
+
+    # Chequeos por persona
+    chequeos_por_persona = {}
+    for c in Chequeo.query.all():
+        chequeos_por_persona[c.nombre] = chequeos_por_persona.get(c.nombre, 0) + 1
+
+    # Doctores por especialidad
+    especialidades = {}
+    for d in Doctor.query.all():
+        especialidades[d.especialidad] = especialidades.get(d.especialidad, 0) + 1
+
+    # Edades
+    import datetime
+    hoy = datetime.date.today()
+
+    joven = adulto = adulto_mayor = 0
+    for p in Paciente.query.all():
+        try:
+            año, mes, dia = map(int, p.fecha_nacimiento.split("-"))
+            edad = hoy.year - año
+            if edad < 30:
+                joven += 1
+            elif edad < 60:
+                adulto += 1
+            else:
+                adulto_mayor += 1
+        except:
+            pass
+
+    return render_template(
+        "dashboard.html",
+        tipos_emergencia=tipos_emergencia,
+        chequeos_por_persona=chequeos_por_persona,
+        especialidades=especialidades,
+        joven=joven,
+        adulto=adulto,
+        adulto_mayor=adulto_mayor
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+import commands

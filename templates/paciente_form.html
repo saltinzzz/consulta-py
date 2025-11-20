@@ -1,28 +1,78 @@
 {% extends 'index.html' %}
 {% block content %}
-<h4>{{ accion }} Paciente</h4>
-<form>
-  <div class="mb-2">
-    <label>Nombre</label>
-    <input class="form-control" placeholder="Ej: Pedro Gomez">
-  </div>
-  <div class="mb-2">
-    <label>DNI</label>
-    <input class="form-control" placeholder="Ej: 12345678">
-  </div>
-  <div class="mb-2">
-    <label>Teléfono</label>
-    <input class="form-control" placeholder="Ej: 987654321">
-  </div>
-  <div class="mb-2">
-    <label>Dirección</label>
-    <input class="form-control" placeholder="Ej: Calle Perusalen">
-  </div>
-  <div class="mb-2">
-    <label>Fecha de Nacimiento</label>
-    <input class="form-control" placeholder="YYYY-MM-DD">
-  </div>
-  <button class="btn btn-primary">Guardar*</button>
-  <a class="btn btn-secondary" href="{{ url_for('listar_pacientes') }}">Volver</a>
-</form>
+<div class="container mt-4">
+  <h3 class="mb-4 text-primary">{{ accion }} Paciente</h3>
+
+  <form class="row g-3" method="POST">
+
+    <div class="col-md-6">
+      <label class="form-label">Nombre Completo</label>
+      <input type="text" name="nombre" class="form-control" placeholder="Ej: Pedro Gomez" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">DNI</label>
+      <input type="text" class="form-control" name="dni" placeholder="Ingrese DNI" pattern="^[0-9]{8}$" maxlength="8" minlength="8" title="El DNI debe tener exactamente 8 números" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Teléfono</label>
+      <input type="text" class="form-control" name="telefono" placeholder="Ingrese teléfono" pattern="^[0-9]{9}$" maxlength="9" minlength="9" title="El teléfono debe tener exactamente 9 números" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Dirección</label>
+      <input type="text" name="direccion" class="form-control" placeholder="Ej: Calle Perusalen 123">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Fecha de Nacimiento</label>
+      <input type="date" name="fecha_nacimiento" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Género</label>
+      <select name="genero" class="form-select" required>
+        <option value="" disabled selected>Seleccione...</option>
+        <option>Masculino</option>
+        <option>Femenino</option>
+        <option>Otro</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Tipo de Sangre</label>
+      <select name="tipo_sangre" class="form-select" required>
+        <option value="" disabled selected>Seleccione...</option>
+        <option>O+</option>
+        <option>O-</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Seguro de Salud</label>
+      <select name="seguro" class="form-select" required>
+        <option value="" disabled selected>Seleccione...</option>
+        <option>ESSALUD</option>
+        <option>SIS</option>
+        <option>Particular</option>
+        <option>Pacífico</option>
+        <option>Mapfre</option>
+        <option>Rímac</option>
+      </select>
+    </div>
+
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{ url_for('listar_pacientes') }}" class="btn btn-secondary">Volver</a>
+    </div>
+
+  </form>
+</div>
 {% endblock %}

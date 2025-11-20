@@ -1,0 +1,100 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="text-primary fw-bold mb-4">📊 Dashboard del Hospital</h2>
+
+    <div class="row g-4">
+
+        <!-- Grafico 1: Tipos de Emergencias -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white fw-bold">Emergencias por tipo</div>
+                <div class="card-body">
+                    <canvas id="chartEmergencias"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grafico 2: Chequeos por Persona -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white fw-bold">Chequeos por Paciente</div>
+                <div class="card-body">
+                    <canvas id="chartChequeos"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grafico 3: Especialidad de Doctores -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white fw-bold">Doctores por Especialidad</div>
+                <div class="card-body">
+                    <canvas id="chartDoctores"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grafico 4: Edad de Pacientes -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white fw-bold">Rangos de Edad de Pacientes</div>
+                <div class="card-body">
+                    <canvas id="chartEdades"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Datos desde Flask
+    const tiposEmergencia = {{ tipos_emergencia | tojson }};
+    const chequeosPorPersona = {{ chequeos_por_persona | tojson }};
+    const especialidades = {{ especialidades | tojson }};
+    const joven = {{ joven }};
+    const adulto = {{ adulto }};
+    const adulto_mayor = {{ adulto_mayor }};
+
+    // Grafico de Emergencias
+    new Chart(document.getElementById('chartEmergencias'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(tiposEmergencia),
+            datasets: [{ data: Object.values(tiposEmergencia) }]
+        }
+    });
+
+    // Chequeos
+    new Chart(document.getElementById('chartChequeos'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(chequeosPorPersona),
+            datasets: [{ data: Object.values(chequeosPorPersona) }]
+        }
+    });
+
+    // Especialidades de doctores
+    new Chart(document.getElementById('chartDoctores'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(especialidades),
+            datasets: [{ data: Object.values(especialidades) }]
+        }
+    });
+
+    // Rangos de edad de pacientes
+    new Chart(document.getElementById('chartEdades'), {
+        type: 'pie',
+        data: {
+            labels: ["Jovenes (<30)", "Adultos (30-59)", "Adulto Mayor (60+)"],
+            datasets: [{ data: [joven, adulto, adulto_mayor] }]
+        }
+    });
+</script>
+
+{% endblock %}

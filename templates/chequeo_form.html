@@ -1,0 +1,113 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-3 text-primary">{{ accion }} Chequeo General</h3>
+
+  <form class="row g-3" method="POST">
+
+    <div class="col-md-6">
+      <label class="form-label">Nombre del Paciente</label>
+      <input type="text" class="form-control" name="nombre" placeholder="Ingrese nombre completo">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">DNI / Historia Clínica</label>
+      <input type="text" class="form-control" name="dni" placeholder="Ingrese DNI" pattern="^[0-9]{8}$" maxlength="8" minlength="8" title="El DNI debe tener exactamente 8 números" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Fecha del Chequeo</label>
+      <input type="date" class="form-control" name="fecha">
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Temperatura (°C)</label>
+      <input type="number" class="form-control" step="0.1" name="temperatura" placeholder="Ej. 36.8">
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">Presión Arterial</label>
+        <input type="text" name="presion" class="form-control" placeholder="120/80" pattern="^\d{2,3}\/\d{2,3}$" title="Formato correcto: 120/80" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Peso (kg)</label>
+      <input type="number" class="form-control" step="0.1" name="peso" placeholder="Ej. 68.5">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Altura (m)</label>
+      <input type="number" class="form-control" name="altura" step="0.01" min="0" placeholder="Ej. 1.75">
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label d-block">¿Toma medicación actualmente?</label>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="medicacion" id="medicacion_si" value="si">
+        <label class="form-check-label" for="medicacion_si">Sí</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="medicacion" id="medicacion_no" value="no" checked>
+        <label class="form-check-label" for="medicacion_no">No</label>
+      </div>
+
+      <div id="detalle_medicacion" class="mt-2" style="display:none;">
+        <label class="form-label">Describa la medicación:</label>
+        <textarea class="form-control" rows="2" name="detalle_medicacion"
+          placeholder="Ej. Paracetamol 500mg cada 8h"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label d-block">¿Presenta alguna alergia?</label>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="alergia" id="alergia_si" value="si">
+        <label class="form-check-label" for="alergia_si">Sí</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="alergia" id="alergia_no" value="no" checked>
+        <label class="form-check-label" for="alergia_no">No</label>
+      </div>
+
+      <div id="detalle_alergia" class="mt-2" style="display:none;">
+        <label class="form-label">Describa la alergia:</label>
+        <textarea class="form-control" rows="2" name="detalle_alergia"
+          placeholder="Ej. Alergia a la penicilina"></textarea>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Observaciones</label>
+      <textarea class="form-control" rows="3" name="observaciones"
+        placeholder="Detalles o recomendaciones del médico"></textarea>
+    </div>
+
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-success">Guardar Registro</button>
+      <a href="{{ url_for('listar_chequeo') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const medicacionSi = document.getElementById('medicacion_si');
+    const medicacionNo = document.getElementById('medicacion_no');
+    const detalleMedicacion = document.getElementById('detalle_medicacion');
+
+    const alergiaSi = document.getElementById('alergia_si');
+    const alergiaNo = document.getElementById('alergia_no');
+    const detalleAlergia = document.getElementById('detalle_alergia');
+
+    medicacionSi.addEventListener('change', () => detalleMedicacion.style.display = 'block');
+    medicacionNo.addEventListener('change', () => detalleMedicacion.style.display = 'none');
+
+    alergiaSi.addEventListener('change', () => detalleAlergia.style.display = 'block');
+    alergiaNo.addEventListener('change', () => detalleAlergia.style.display = 'none');
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-3 text-primary">{{ accion }} Control de Maternidad</h3>
+
+  <form class="row g-3" method="POST">
+
+    <div class="col-md-6">
+      <label class="form-label">Nombre del Paciente</label>
+      <input type="text" name="nombre" class="form-control" placeholder="Ingrese nombre completo" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">DNI / Historia Clínica</label>
+      <input type="text" class="form-control" name="dni" placeholder="Ingrese DNI" pattern="^[0-9]{8}$" maxlength="8" minlength="8" title="El DNI debe tener exactamente 8 números" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Fecha del Control</label>
+      <input type="date" name="fecha_control" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Edad Gestacional (semanas)</label>
+      <input type="number" name="edad_gestacional" class="form-control" required>
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">Presión Arterial</label>
+        <input type="text" name="presion" class="form-control" placeholder="120/80" pattern="^\d{2,3}\/\d{2,3}$" title="Formato correcto: 120/80" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Peso Actual (kg)</label>
+      <input type="number" name="peso" class="form-control" step="0.1" required>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label d-block">¿Presenta mareos o náuseas?</label>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="mareos_nauseas" id="sintomas_si" value="si">
+        <label class="form-check-label" for="sintomas_si">Sí</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="mareos_nauseas" id="sintomas_no" value="no" checked>
+        <label class="form-check-label" for="sintomas_no">No</label>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label d-block">¿Alergia a medicamentos?</label>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="alergia" id="alergiaM_si" value="si">
+        <label class="form-check-label" for="alergiaM_si">Sí</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="alergia" id="alergiaM_no" value="no" checked>
+        <label class="form-check-label" for="alergiaM_no">No</label>
+      </div>
+
+      <div id="detalle_alergiaM" class="mt-2" style="display:none;">
+        <label class="form-label">Describa la alergia:</label>
+        <textarea class="form-control" name="detalle_alergia" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Observaciones del Médico</label>
+      <textarea class="form-control" name="observaciones" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Próximo control programado</label>
+      <input type="date" name="proxima_fecha" class="form-control">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Tema a Tratar</label>
+      <select class="form-select" name="tema">
+        <option value="" selected disabled>Seleccione una opción</option>
+        <option>Ecografía</option>
+        <option>Revisión de presión arterial</option>
+        <option>Examen de laboratorio</option>
+        <option>Radiografía</option>
+        <option>Consejería nutricional</option>
+        <option>Otro</option>
+      </select>
+    </div>
+
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-success">Guardar Control</button>
+      <a href="{{ url_for('listar_maternidad') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const alergiaSi = document.getElementById('alergiaM_si');
+    const alergiaNo = document.getElementById('alergiaM_no');
+    const detalleAlergia = document.getElementById('detalle_alergiaM');
+
+    alergiaSi.addEventListener('change', () => detalleAlergia.style.display = 'block');
+    alergiaNo.addEventListener('change', () => detalleAlergia.style.display = 'none');
+  });
+</script>
+{% endblock %}

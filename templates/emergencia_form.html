@@ -1,0 +1,112 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-3 text-primary">{{ accion }} Emergencia</h3>
+
+  <form class="row g-3" method="POST">
+
+    <div class="col-md-6">
+      <label class="form-label">Nombre del Paciente</label>
+      <input type="text" class="form-control" name="nombre" placeholder="Ingrese nombre completo">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">DNI / Historia Clínica</label>
+      <input type="text" class="form-control" name="dni" placeholder="Ingrese DNI o código">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Fecha y Hora de Ingreso</label>
+      <input type="datetime-local" class="form-control" name="fecha_hora">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Tipo de Emergencia</label>
+      <select class="form-select" name="tipo">
+        <option selected disabled>Seleccione...</option>
+        <option>Corte</option>
+        <option>Fractura</option>
+        <option>Desmayo</option>
+        <option>Intoxicación</option>
+        <option>Otro</option>
+      </select>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label d-block">¿Presenta sangrado activo?</label>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="sangrado" id="sangrado_si" value="si">
+        <label class="form-check-label" for="sangrado_si">Sí</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="sangrado" id="sangrado_no" value="no" checked>
+        <label class="form-check-label" for="sangrado_no">No</label>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label d-block">¿Alergia a medicamentos?</label>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="alergia" id="alergia_si" value="si">
+        <label class="form-check-label" for="alergia_si">Sí</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="alergia" id="alergia_no" value="no" checked>
+        <label class="form-check-label" for="alergia_no">No</label>
+      </div>
+
+      <div id="detalle_alergiaE" class="mt-2" style="display:none;">
+        <label class="form-label">Describa la alergia:</label>
+        <textarea class="form-control" rows="2" name="detalle_alergia"
+          placeholder="Ej. Alergia a la penicilina u otros medicamentos"></textarea>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Descripción del Incidente</label>
+      <textarea class="form-control" rows="3" name="descripcion_incidente" placeholder="Explique brevemente lo ocurrido"></textarea>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Atención Brindada</label>
+      <textarea class="form-control" rows="3" name="atencion" placeholder="Procedimientos realizados o medicamentos aplicados"></textarea>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Referido a otra área / hospital</label>
+      <select class="form-select" name="referido">
+        <option selected disabled>Seleccione...</option>
+        <option>Ninguno</option>
+        <option>Rayos X</option>
+        <option>Laboratorio</option>
+        <option>Unidad de Cuidados Intensivos (UCI)</option>
+        <option>Traumatología</option>
+        <option>Cirugía</option>
+        <option>Pediatría</option>
+        <option>Ginecología</option>
+        <option>Otro Centro de Salud</option>
+      </select>
+    </div>
+
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-danger">Registrar Emergencia</button>
+      <a href="{{ url_for('listar_emergencia') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const alergiaSi = document.getElementById('alergia_si');
+    const alergiaNo = document.getElementById('alergia_no');
+    const detalleAlergia = document.getElementById('detalle_alergiaE');
+
+    alergiaSi.addEventListener('change', () => detalleAlergia.style.display = 'block');
+    alergiaNo.addEventListener('change', () => detalleAlergia.style.display = 'none');
+  });
+</script>
+{% endblock %}

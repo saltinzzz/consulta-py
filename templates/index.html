@@ -1,51 +1,43 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hospital - Sistema de Consultas</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-  </head>
+{% extends 'base.html' %}
+{% block content %}
 
- <body class="bg-light">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('listar_pacientes') }}">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Hospital" class="logo-hospital img-fluid me-2" style="max-height:40px;">
-        <span>Hospital Perusalen</span>
-      </a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<div class="container text-center mt-4">
+  <div class="hero-section mb-5">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" 
+         alt="Logo Hospital" 
+         onerror="this.onerror=null; this.src='https://placehold.co/100x100/ffffff/007bff?text=HP';">
+    <h1>Hospital Perusalen</h1>
+    <p class="lead mb-0">Sistema de Gestión de Consultas Médicas</p>
+  </div>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light btn-sm mx-1" href="{{ url_for('listar_pacientes') }}">Pacientes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light btn-sm mx-1" href="{{ url_for('listar_consultas') }}">Consultas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light btn-sm mx-1" href="{{ url_for('chequeo') }}">Chequeo General</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light btn-sm mx-1" href="{{ url_for('maternidad') }}">Maternidad</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light btn-sm mx-1" href="{{ url_for('emergencia') }}">Emergencia</a>
-          </li>
-        </ul>
-      </div>
+  <h2 class="section-title text-primary">Áreas de Atención Rápida</h2>
+  <div class="row justify-content-center mt-4">
+    <div class="col-sm-6 col-lg-3 mb-4">
+      <a href="{{ url_for('listar_chequeo') }}" class="btn btn-outline-success w-100 py-4 option-card">🩺 Chequeo General</a>
     </div>
-  </nav>
-
-    <div class="container-fluid">
-      {% block content %}{% endblock %}
+    <div class="col-sm-6 col-lg-3 mb-4">
+      <a href="{{ url_for('listar_maternidad') }}" class="btn w-100 py-4 option-card" style="border:1px solid #d63384;color:#d63384;">🤰 Maternidad</a>
     </div>
+    <div class="col-sm-6 col-lg-3 mb-4">
+      <a href="{{ url_for('listar_emergencia') }}" class="btn btn-outline-danger w-100 py-4 option-card">🚑 Emergencia</a>
+    </div>
+  </div>
 
-    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  </body>
-</html>
+  <h2 class="section-title text-secondary">Gestión del Sistema</h2>
+  <div class="row justify-content-center mt-4">
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <a href="{{ url_for('listar_pacientes') }}" class="btn btn-primary w-100 py-3 option-card">😷 Ver Lista de Pacientes</a>
+    </div>
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <a href="{{ url_for('listar_doctores') }}" class="btn btn-dark w-100 py-3 option-card">👨‍⚕️ Ver Lista de Doctores</a>
+    </div>
+  </div>
+
+  <h2 class="section-title text-secondary">Gestión de Métricas</h2>
+  <div class="row justify-content-center mt-4">
+    <div class="col-sm-6 col-lg-4 mb-4">
+      <a href="{{ url_for('dashboard') }}" class="btn btn-dark w-100 py-3 fs-5">📈 Dashboard</a>
+    </div>
+</div>
+
+{% endblock %}

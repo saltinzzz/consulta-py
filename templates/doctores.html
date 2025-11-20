@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-6">
+            <h3 class="text-primary">Lista de Doctores</h3>
+        </div>
+        <div class="col-sm-6 text-sm-end text-start mt-2 mt-sm-0">
+            <a class="btn btn-success" href="{{ url_for('nuevo_doctor') }}">Nuevo Doctor</a>
+            <a class="btn btn-secondary" href="{{ url_for('inicio') }}">Volver</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <table class="table table-sm table-hover shadow-sm d-none d-md-table">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Especialidad</th>
+                        <th>Turno</th>
+                        <th>Contacto</th>
+                        <th>Correo</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in doctores %}
+                    <tr>
+                        <td>{{ d.nombre }}</td>
+                        <td>{{ d.especialidad }}</td>
+                        <td>{{ d.turno }}</td>
+                        <td>{{ d.contacto }}</td>
+                        <td>{{ d.correo }}</td>
+                        <td>{{ d.fecha_ingreso }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary disabled">Editar</button>
+                            <button class="btn btn-sm btn-danger disabled">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="row row-cols-1 g-3 d-md-none">
+                {% for d in doctores %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-primary">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{ d.nombre }}</h5>
+                            <p class="card-text mb-1"><strong>Especialidad:</strong> {{ d.especialidad }}</p>
+                            <p class="card-text mb-1"><strong>Turno:</strong> {{ d.turno }}</p>
+                            <p class="card-text mb-1"><strong>Contacto:</strong> {{ d.contacto }}</p>
+                            <p class="card-text mb-1"><strong>Correo:</strong> {{ d.correo }}</p>
+                            <p class="card-text mb-0"><strong>Fecha Ingreso:</strong> {{ d.fecha_ingreso }}</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <button class="btn btn-sm btn-primary disabled">Editar</button>
+                            <button class="btn btn-sm btn-danger disabled">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

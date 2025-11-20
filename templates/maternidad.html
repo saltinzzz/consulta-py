@@ -1,93 +1,52 @@
 {% extends 'index.html' %}
 {% block content %}
 <div class="container mt-4">
-  <h3 class="mb-3 text-primary">Control de Maternidad</h3>
-  <form class="row g-3">
-
-    <div class="col-md-6">
-      <label class="form-label">Nombre del Paciente</label>
-      <input type="text" class="form-control" placeholder="Ingrese nombre completo">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-6">
+            <h3 class="text-primary">Lista de Control de maternidad</h3>
+        </div>
+        <div class="col-sm-6 text-sm-end text-start mt-2 mt-sm-0">
+            <a class="btn btn-success" href="{{ url_for('nueva_maternidad') }}">Nuevo control</a>
+            <a class="btn btn-secondary" href="{{ url_for('inicio') }}">Volver</a>
+        </div>
     </div>
 
-    <div class="col-md-6">
-      <label class="form-label">DNI / Historia Clínica</label>
-      <input type="text" class="form-control" placeholder="Ingrese DNI o código">
+    {% if maternidad and maternidad|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Nombre Paciente</th>
+                    <th>Fecha Control</th>
+                    <th>Presión Arterial</th>
+                    <th>Peso</th>
+                    <th>Próxima Fecha</th>
+                    <th>Tema a Tratar</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in maternidad %}
+                <tr>
+                    <td>{{ c.nombre }}</td>
+                    <td>{{ c.fecha_control }}</td>
+                    <td>{{ c.presion }}</td>
+                    <td>{{ c.peso }}</td>
+                    <td>{{ c.proxima_fecha }}</td>
+                    <td>{{ c.tema }}</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm">Editar</button>
+                        <button class="btn btn-outline-danger btn-sm">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-
-    <div class="col-md-4">
-      <label class="form-label">Fecha del Control</label>
-      <input type="date" class="form-control">
+    {% else %}
+    <div class="alert alert-info text-center">
+        No hay registros de chequeos generales todavía.
     </div>
-
-    <div class="col-md-4">
-      <label class="form-label">Edad Gestacional (semanas)</label>
-      <input type="number" class="form-control">
-    </div>
-
-    <div class="col-md-4">
-      <label class="form-label">Presión Arterial</label>
-      <input type="text" class="form-control" placeholder="Ej. 110/70">
-    </div>
-
-    <div class="col-md-6">
-      <label class="form-label">Peso Actual (kg)</label>
-      <input type="number" class="form-control" step="0.1">
-    </div>
-
-    <div class="col-md-12">
-      <label class="form-label d-block">¿Presenta mareos o náuseas?</label>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="sintomas" id="sintomas_si" value="si">
-        <label class="form-check-label" for="sintomas_si">Sí</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="sintomas" id="sintomas_no" value="no" checked>
-        <label class="form-check-label" for="sintomas_no">No</label>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <label class="form-label d-block">¿Alergia a medicamentos?</label>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="alergiaM" id="alergiaM_si" value="si">
-        <label class="form-check-label" for="alergiaM_si">Sí</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="alergiaM" id="alergiaM_no" value="no" checked>
-        <label class="form-check-label" for="alergiaM_no">No</label>
-      </div>
-
-      <!-- Textarea condicional -->
-      <div id="detalle_alergiaM" class="mt-2" style="display:none;">
-        <label class="form-label">Describa la alergia:</label>
-        <textarea class="form-control" rows="2" placeholder="Ej. Alergia a la penicilina o a otros medicamentos"></textarea>
-      </div>
-    </div>
-
-    <div class="col-12">
-      <label class="form-label">Observaciones del Médico</label>
-      <textarea class="form-control" rows="3" placeholder="Anotar detalles del control"></textarea>
-    </div>
-
-    <div class="col-md-6">
-      <label class="form-label">Próximo control programado</label>
-      <input type="date" class="form-control">
-    </div>
-
-    <div class="col-12 text-end">
-      <button type="submit" class="btn btn-success">Guardar Control</button>
-    </div>
-  </form>
+    {% endif %}
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const alergiaSi = document.getElementById('alergiaM_si');
-    const alergiaNo = document.getElementById('alergiaM_no');
-    const detalleAlergia = document.getElementById('detalle_alergiaM');
-
-    alergiaSi.addEventListener('change', () => detalleAlergia.style.display = 'block');
-    alergiaNo.addEventListener('change', () => detalleAlergia.style.display = 'none');
-  });
-</script>
 {% endblock %}

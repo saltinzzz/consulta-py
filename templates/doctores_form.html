@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-3 text-primary">Registrar Nuevo Doctor</h3>
+
+  <form class="row g-3" method="POST">
+
+    <div class="col-md-6">
+      <label class="form-label">Nombre Completo</label>
+      <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre del doctor" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Especialidad</label>
+      <select class="form-select" name="especialidad" required>
+        <option selected disabled>Seleccione especialidad...</option>
+        <option>Medicina General</option>
+        <option>Pediatría</option>
+        <option>Ginecología</option>
+        <option>Cardiología</option>
+        <option>Neurología</option>
+        <option>Traumatología</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Turno</label>
+      <select class="form-select" name="turno" required>
+        <option selected disabled>Seleccione turno...</option>
+        <option>Mañana</option>
+        <option>Tarde</option>
+        <option>Noche</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Número de Contacto</label>
+      <input type="text" class="form-control" name="telefono" placeholder="Ingrese teléfono" pattern="^[0-9]{9}$" maxlength="9" minlength="9" title="El teléfono debe tener exactamente 9 números" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Correo Electrónico</label>
+      <input type="email" class="form-control" name="correo" placeholder="correo@ejemplo.com" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$" title="Ingrese un correo válido que termine en .com" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Fecha de Ingreso</label>
+      <input type="date" class="form-control" name="fecha_ingreso" required>
+    </div>
+    
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-primary">Registrar Doctor</button>
+      <a href="{{ url_for('listar_doctores') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

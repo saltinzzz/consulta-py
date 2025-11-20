@@ -1,55 +1,72 @@
 {% extends 'index.html' %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h3>Pacientes</h3>
-  <a class="btn btn-success" href="{{ url_for('nuevo_paciente') }}">Nuevo Paciente</a>
-</div>
-
-<table class="table table-striped d-none d-md-table">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>DNI</th>
-      <th>Teléfono</th>
-      <th>Dirección</th>
-      <th>Fecha de Nacimiento</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for p in pacientes %}
-    <tr>
-      <td>{{ p.nombre }}</td>
-      <td>{{ p.dni }}</td>
-      <td>{{ p.telefono }}</td>
-      <td>{{ p.direccion }}</td>
-      <td>{{ p.fecha_nacimiento }}</td>
-      <td>
-        <button class="btn btn-sm btn-primary" disabled>Editar</button>
-        <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<div class="row row-cols-1 g-3 d-md-none">
-  {% for p in pacientes %}
-  <div class="col">
-    <div class="card h-100 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">{{ p.nombre }}</h5>
-        <p class="card-text"><strong>DNI:</strong> {{ p.dni }}</p>
-        <p class="card-text"><strong>Teléfono:</strong> {{ p.telefono }}</p>
-        <p class="card-text"><strong>Dirección:</strong> {{ p.direccion }}</p>
-        <p class="card-text"><strong>Fecha de Nacimiento:</strong> {{ p.fecha_nacimiento }}</p>
-      </div>
-      <div class="card-footer d-flex justify-content-between">
-        <button class="btn btn-primary btn-sm" disabled>Editar</button>
-        <button class="btn btn-danger btn-sm" disabled>Eliminar</button>
-      </div>
+<div class="container mt-4">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-6">
+            <h3 class="text-primary">Lista de Pacientes</h3>
+        </div>
+        <div class="col-sm-6 text-sm-end text-start mt-2 mt-sm-0">
+            <a class="btn btn-success" href="{{ url_for('nuevo_paciente') }}">Nuevo Paciente</a>
+            <a class="btn btn-secondary" href="{{ url_for('inicio') }}">Volver</a>
+        </div>
     </div>
-  </div>
-  {% endfor %}
+
+    <table class="table table-striped d-none d-md-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>DNI</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Género</th>
+          <th>Tipo Sangre</th>
+          <th>Seguro</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in pacientes %}
+        <tr>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.dni }}</td>
+          <td>{{ p.telefono }}</td>
+          <td>{{ p.direccion }}</td>
+          <td>{{ p.fecha_nacimiento }}</td>
+          <td>{{ p.genero }}</td>
+          <td>{{ p.tipo_sangre }}</td>
+          <td>{{ p.seguro }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" disabled>Editar</button>
+            <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="row row-cols-1 g-3 d-md-none">
+      {% for p in pacientes %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ p.nombre }}</h5>
+            <p class="card-text"><strong>DNI:</strong> {{ p.dni }}</p>
+            <p class="card-text"><strong>Teléfono:</strong> {{ p.telefono }}</p>
+            <p class="card-text"><strong>Dirección:</strong> {{ p.direccion }}</p>
+            <p class="card-text"><strong>Fecha de Nacimiento:</strong> {{ p.fecha_nacimiento }}</p>
+            <p class="card-text"><strong>Género:</strong> {{ p.genero }}</p>
+            <p class="card-text"><strong>Tipo de sangre:</strong> {{ p.tipo_sangre }}</p>
+            <p class="card-text"><strong>Seguro:</strong> {{ p.seguro }}</p>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <button class="btn btn-primary btn-sm" disabled>Editar</button>
+            <button class="btn btn-danger btn-sm" disabled>Eliminar</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
 </div>
 {% endblock %}
