@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hospital - Sistema de Consultas</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
   </head>
@@ -11,10 +12,17 @@
   <body class="bg-light d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
       <div class="container-fluid">
+        
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('inicio') }}">
-          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Hospital" class="img-fluid me-2" style="max-height:40px;">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" 
+               alt="Logo Hospital" 
+               class="img-fluid me-2 logo-hospital">
           <span>Hospital Perusalen</span>
         </a>
+
+        {% if session.get('usuario') %}
+        <a href="{{ url_for('logout') }}" class="btn btn-danger btn-sm">Salir</a>
+        {% endif %}
       </div>
     </nav>
 

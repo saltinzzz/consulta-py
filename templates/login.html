@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+    <div class="col-md-5 col-lg-4">
+
+        <div class="text-center mb-4">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" 
+                 alt="Logo Hospital" 
+                 class="login-logo mb-2"
+                 onerror="this.onerror=null; this.src='https://placehold.co/120x120/007bff/ffffff?text=HP';">
+            <h3 class="text-primary fw-bold mt-2">Hospital Perusalen</h3>
+            <p class="text-muted">Acceso al Sistema</p>
+        </div>
+
+        <div class="card shadow-lg p-3">
+            <div class="card-body">
+
+                {% if error %}
+                    <div class="alert alert-danger text-center">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST">
+
+                    <label class="fw-semibold">Usuario</label>
+                    <input type="text" name="usuario" class="form-control mb-3" required>
+
+                    <label class="fw-semibold">Contraseña</label>
+                    <input type="password" name="password" class="form-control mb-3" required>
+
+                    <label class="fw-semibold">Sucursal</label>
+                    <select name="sucursal" class="form-select mb-4" required>
+                        <option value="Sucursal 1">Sucursal 1</option>
+                        <option value="Sucursal 2">Sucursal 2</option>
+                        <option value="Sucursal 3">Sucursal 3</option>
+                    </select>
+
+                    <button class="btn btn-primary w-100 py-2 fs-5" type="submit">
+                        Ingresar
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
